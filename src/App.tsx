@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Star, MapPin, Clock, Phone, Instagram, Facebook, Twitter, Quote, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Menu as MenuIcon, X } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'motion/react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,40 +49,56 @@ const Navbar = () => {
   );
 };
 
-const Hero = () => (
-  <section id="inicio" className="relative h-screen flex items-center justify-center text-center">
-    <div 
-      className="absolute inset-0 bg-cover bg-center z-0"
-      style={{ 
-        backgroundImage: 'url("https://res.cloudinary.com/dfbsqy5ul/image/upload/v1772556732/Txoko-desde1963_asfnju.jpg")',
-      }}
-    >
-      <div className="absolute inset-0 bg-darker/80"></div>
-    </div>
-    
-    <div className="relative z-10 max-w-4xl px-4">
-      <h1 className="font-serif text-7xl md:text-9xl text-white mb-4">Bar Txoko</h1>
-      <div className="flex flex-col items-center justify-center space-y-2 mb-10">
-        <p className="font-serif italic text-gold text-2xl md:text-4xl">Desde 1920</p>
-        <p className="text-gray-text tracking-widest uppercase text-sm md:text-base">PTV – De Pamplona de Toda la Vida</p>
-      </div>
-      <p className="text-white/80 mb-10 italic font-serif text-lg">En el corazón de Pamplona, en la mítica Plaza del Castillo.</p>
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-        <a href="#carta" className="border border-white text-white px-10 py-3 tracking-widest text-sm hover:bg-white hover:text-darker transition-colors w-full sm:w-auto text-center">
-          VER CARTA
-        </a>
-        <a href="#reserva" className="bg-gold text-darker px-10 py-3 tracking-widest text-sm font-medium hover:bg-gold-hover transition-colors w-full sm:w-auto text-center">
-          RESERVAR MESA
-        </a>
-      </div>
-    </div>
-  </section>
-);
+const Hero = () => {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 1000], [0, 300]);
+
+  return (
+    <section id="inicio" className="relative h-screen flex items-center justify-center text-center overflow-hidden">
+      <motion.div 
+        className="absolute inset-0 bg-cover bg-center z-0"
+        style={{ 
+          backgroundImage: 'url("https://res.cloudinary.com/dfbsqy5ul/image/upload/v1772556732/Txoko-desde1963_asfnju.jpg")',
+          y
+        }}
+      >
+        <div className="absolute inset-0 bg-darker/80"></div>
+      </motion.div>
+      
+      <motion.div 
+        className="relative z-10 max-w-4xl px-4"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <h1 className="font-serif text-7xl md:text-9xl text-white mb-4">Bar Txoko</h1>
+        <div className="flex flex-col items-center justify-center space-y-2 mb-10">
+          <p className="font-serif italic text-gold text-2xl md:text-4xl">Desde 1920</p>
+          <p className="text-gray-text tracking-widest uppercase text-sm md:text-base">PTV – De Pamplona de Toda la Vida</p>
+        </div>
+        <p className="text-white/80 mb-10 italic font-serif text-lg">En el corazón de Pamplona, en la mítica Plaza del Castillo.</p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+          <a href="#carta" className="border border-white text-white px-10 py-3 tracking-widest text-sm hover:bg-white hover:text-darker transition-colors w-full sm:w-auto text-center">
+            VER CARTA
+          </a>
+          <a href="#reserva" className="bg-gold text-darker px-10 py-3 tracking-widest text-sm font-medium hover:bg-gold-hover transition-colors w-full sm:w-auto text-center">
+            RESERVAR MESA
+          </a>
+        </div>
+      </motion.div>
+    </section>
+  );
+};
 
 const About = () => (
-  <section id="nosotros" className="py-24 px-8 md:px-16 lg:px-24 bg-dark">
+  <section id="nosotros" className="py-24 px-8 md:px-16 lg:px-24 bg-dark overflow-hidden">
     <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-      <div>
+      <motion.div
+        initial={{ opacity: 0, x: -50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+      >
         <h4 className="font-serif italic text-gold text-xl mb-2">Nuestra Historia</h4>
         <h2 className="font-serif text-4xl md:text-5xl text-white mb-8">El auténtico PTV</h2>
         
@@ -102,15 +119,21 @@ const About = () => (
             "Tradición, autenticidad y cultura local. El punto de encuentro indiscutible en el corazón de Pamplona."
           </p>
         </div>
-      </div>
+      </motion.div>
       
-      <div className="relative h-[600px]">
+      <motion.div 
+        className="relative h-[600px]"
+        initial={{ opacity: 0, x: 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+      >
         <img 
           src="https://res.cloudinary.com/dfbsqy5ul/image/upload/v1772555829/96754705_1687181084738980_2208646722484174848_n_iqxcpa.jpg" 
           alt="Bar Txoko Histórico" 
           className="w-full h-full object-cover grayscale-[40%] brightness-75"
         />
-      </div>
+      </motion.div>
     </div>
   </section>
 );
@@ -154,8 +177,14 @@ const Menu = () => {
   const [activeTab, setActiveTab] = useState<'pintxos' | 'comida' | 'bebidas' | 'galeria'>('comida');
 
   return (
-    <section id="carta" className="py-24 px-8 md:px-16 lg:px-24 bg-darker">
-      <div className="max-w-6xl mx-auto">
+    <section id="carta" className="py-24 px-8 md:px-16 lg:px-24 bg-darker overflow-hidden">
+      <motion.div 
+        className="max-w-6xl mx-auto"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+      >
         <div className="text-center mb-12">
           <h4 className="font-serif italic text-gold text-xl mb-2">Nuestra Oferta</h4>
           <h2 className="font-serif text-4xl md:text-5xl text-white">La Carta</h2>
@@ -432,7 +461,7 @@ const Menu = () => {
             </div>
           )}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
@@ -494,8 +523,14 @@ const Testimonials = () => {
   const visibleReviews = reviewsData.slice(currentIndex * itemsPerPage, currentIndex * itemsPerPage + itemsPerPage);
 
   return (
-    <section id="resenas" className="py-24 px-8 md:px-16 lg:px-24 bg-dark">
-      <div className="max-w-7xl mx-auto text-center">
+    <section id="resenas" className="py-24 px-8 md:px-16 lg:px-24 bg-dark overflow-hidden">
+      <motion.div 
+        className="max-w-7xl mx-auto text-center"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+      >
         <h4 className="font-serif italic text-gold text-xl mb-2">Valoración basada en experiencias reales en Google</h4>
         <h2 className="font-serif text-4xl md:text-5xl text-white mb-8">Lo que dicen nuestros clientes</h2>
         
@@ -555,15 +590,21 @@ const Testimonials = () => {
         >
           👉 Deja tu reseña en Google
         </a>
-      </div>
+      </motion.div>
     </section>
   );
 };
 
 const Location = () => (
-  <section id="visitanos" className="py-24 px-8 md:px-16 lg:px-24 bg-dark">
+  <section id="visitanos" className="py-24 px-8 md:px-16 lg:px-24 bg-dark overflow-hidden">
     <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-16">
-      <div className="w-full lg:w-5/12 flex flex-col justify-between">
+      <motion.div 
+        className="w-full lg:w-5/12 flex flex-col justify-between"
+        initial={{ opacity: 0, x: -50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+      >
         <div>
           <h4 className="font-serif italic text-gold text-xl mb-2">Visítanos</h4>
           <h2 className="font-serif text-4xl md:text-5xl text-white mb-12">Dónde estamos</h2>
@@ -603,9 +644,15 @@ const Location = () => (
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="w-full lg:w-7/12 flex flex-col">
+      <motion.div 
+        className="w-full lg:w-7/12 flex flex-col"
+        initial={{ opacity: 0, x: 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+      >
         <div className="w-full flex-grow min-h-[400px] lg:min-h-full rounded-xl overflow-hidden border border-gold/30 shadow-2xl">
           <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2928.665975549887!2d-1.6445301!3d42.816541!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5092f9352a891f%3A0x269637d08feb2886!2sBar%20-Txoko-%20Taberna!5e0!3m2!1ses!2ses!4v1700000000000!5m2!1ses!2ses" 
@@ -614,14 +661,20 @@ const Location = () => (
             loading="lazy"
           ></iframe>
         </div>
-      </div>
+      </motion.div>
     </div>
   </section>
 );
 
 const Reservation = () => (
-  <section id="reserva" className="py-24 px-8 md:px-16 lg:px-24 bg-darker">
-    <div className="max-w-3xl mx-auto border border-gold/30 p-12 md:p-20 relative bg-card text-center">
+  <section id="reserva" className="py-24 px-8 md:px-16 lg:px-24 bg-darker overflow-hidden">
+    <motion.div 
+      className="max-w-3xl mx-auto border border-gold/30 p-12 md:p-20 relative bg-card text-center"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8 }}
+    >
       {/* Corner accents */}
       <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-gold"></div>
       <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-gold"></div>
@@ -642,7 +695,7 @@ const Reservation = () => (
         <Phone className="w-6 h-6" />
         <span>948 22 20 12</span>
       </a>
-    </div>
+    </motion.div>
   </section>
 );
 

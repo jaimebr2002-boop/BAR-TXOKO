@@ -635,11 +635,11 @@ const Location = () => (
               </div>
             </div>
             
-            <div className="flex items-start space-x-6">
+            <div className="flex items-start space-x-4 md:space-x-6">
               <Phone className="w-6 h-6 text-gold shrink-0 mt-1" />
               <div>
                 <h3 className="text-white text-lg mb-2">Contacto</h3>
-                <a href="tel:+34948222012" className="text-gray-text hover:text-gold transition-colors text-lg">948 22 20 12</a>
+                <a href="tel:+34948222012" className="text-gray-text hover:text-gold transition-colors text-lg">948222012</a>
               </div>
             </div>
           </div>
@@ -653,7 +653,7 @@ const Location = () => (
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8 }}
       >
-        <div className="w-full flex-grow min-h-[400px] lg:min-h-full rounded-xl overflow-hidden border border-gold/30 shadow-2xl">
+        <div className="w-full h-[450px] md:h-[500px] lg:h-auto lg:min-h-full rounded-xl overflow-hidden border border-gold/30 shadow-2xl">
           <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2928.665975549887!2d-1.6445301!3d42.816541!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5092f9352a891f%3A0x269637d08feb2886!2sBar%20-Txoko-%20Taberna!5e0!3m2!1ses!2ses!4v1700000000000!5m2!1ses!2ses" 
             className="w-full h-full border-0" 
@@ -667,9 +667,9 @@ const Location = () => (
 );
 
 const Reservation = () => (
-  <section id="reserva" className="py-24 px-8 md:px-16 lg:px-24 bg-darker overflow-hidden">
+  <section id="reserva" className="py-16 md:py-24 px-4 sm:px-8 md:px-16 lg:px-24 bg-darker overflow-hidden">
     <motion.div 
-      className="max-w-3xl mx-auto border border-gold/30 p-12 md:p-20 relative bg-card text-center"
+      className="max-w-3xl mx-auto border border-gold/30 p-6 sm:p-12 md:p-20 relative bg-card text-center"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -690,10 +690,10 @@ const Reservation = () => (
       
       <a 
         href="tel:+34948222012" 
-        className="inline-flex items-center justify-center space-x-3 bg-gold text-darker px-12 py-4 tracking-widest text-lg font-medium hover:bg-gold-hover transition-colors"
+        className="inline-flex items-center justify-center space-x-3 bg-gold text-darker px-6 sm:px-12 py-4 tracking-widest text-base sm:text-lg font-medium hover:bg-gold-hover transition-colors w-full sm:w-auto"
       >
-        <Phone className="w-6 h-6" />
-        <span>948 22 20 12</span>
+        <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
+        <span>948222012</span>
       </a>
     </motion.div>
   </section>
@@ -715,7 +715,7 @@ const Footer = () => (
       
       <div className="text-gray-text text-sm">
         <h4 className="text-white font-serif italic mb-3">Contacto</h4>
-        <a href="tel:+34948222012" className="hover:text-gold transition-colors block mb-1">948 22 20 12</a>
+        <a href="tel:+34948222012" className="hover:text-gold transition-colors block mb-1">948222012</a>
         <div className="flex space-x-4 mt-4 justify-center md:justify-start">
           <a href="https://www.facebook.com/www.bareltxoko/?locale=es_ES" target="_blank" rel="noopener noreferrer" className="text-gray-text hover:text-gold transition-colors">
             <Facebook className="w-5 h-5" />
